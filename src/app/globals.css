@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+/* Design tokens — the whole "literary minimal" look lives in these few values.
+   Change a color here and it updates everywhere. */
+:root {
+  --background: #faf8f3; /* warm paper */
+  --foreground: #201f1c; /* ink */
+  --muted: #6f6a60; /* soft gray-brown for secondary text */
+  --accent: #26324d; /* deep navy */
+  --line: #e7e1d5; /* hairline borders */
+}
+
+/* Expose the tokens (and the fonts loaded in layout.tsx) to Tailwind v4,
+   so classes like `text-muted`, `bg-accent`, `font-serif` just work. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-line: var(--line);
+  --font-serif: var(--font-eb-garamond);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* A soft, literary text selection tint. */
+::selection {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
