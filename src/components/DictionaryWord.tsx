@@ -1,0 +1,33 @@
+import type { ReactNode } from "react";
+
+// "Çikoçiki" — the word Deniz invented as a child, from her bio. Hovering it
+// reveals a tiny dictionary entry, closing the loop with the Oxford dictionary
+// motif: the site itself becomes the book that explains her word.
+// CSS-only popover (hover + focus), so this stays a server component.
+export default function DictionaryWord({ children }: { children: ReactNode }) {
+  return (
+    <span className="group relative inline-block">
+      <button
+        type="button"
+        className="cursor-help border-b border-dotted border-accent/70 font-serif italic text-accent"
+      >
+        {children}
+      </button>
+
+      <span
+        role="tooltip"
+        className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-3 w-64 -translate-x-1/2 translate-y-1 border border-line bg-background p-4 text-left opacity-0 shadow-[0_14px_35px_-12px_rgba(32,31,28,0.35)] transition-all duration-300 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100"
+      >
+        <span className="block font-serif text-base text-foreground">
+          çi·ko·çi·ki
+        </span>
+        <span className="mt-0.5 block text-xs italic text-muted">
+          isim, çocukluk icadı
+        </span>
+        <span className="mt-2 block text-sm leading-relaxed text-foreground/85">
+          Hiç bitmeyen çikolata. Yapımına dair uzun ve gizli bir tarifi vardır.
+        </span>
+      </span>
+    </span>
+  );
+}

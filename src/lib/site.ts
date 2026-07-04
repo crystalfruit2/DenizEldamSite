@@ -21,3 +21,6 @@ export const bio: string[] = [
 
 // A short pull-quote drawn from the bio, used on the hero.
 export const heroQuote = "Şimdilerde öyküler yazıyorum.";
+
+// The "living" status line — from the bio's closing lines. Update as life moves.
+export const currentStatus = "Şu sıralar üçüncü kitabını hazırlıyor";

@@ -7,7 +7,7 @@ const nav = [
 
 export default function SiteHeader() {
   return (
-    <header className="border-b border-line">
+    <header className="sticky top-0 z-40 border-b border-line bg-background/85 backdrop-blur-sm">
       <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-6">
         <Link
           href="/"
@@ -20,7 +20,7 @@ export default function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-muted transition-colors hover:text-accent"
+              className="relative text-muted transition-colors after:absolute after:-bottom-1 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:text-accent hover:after:scale-x-100"
             >
               {item.label}
             </Link>
