@@ -1,15 +1,24 @@
+"use client";
+
 import Link from "next/link";
 import { bio } from "@/lib/site";
 import { books } from "@/lib/books";
+import { media } from "@/lib/media";
+import { useLanguage } from "@/lib/language-context";
+import { ui } from "@/lib/ui-strings";
 import BookCard from "@/components/BookCard";
+import VideoCard from "@/components/VideoCard";
 import Hero from "@/components/Hero";
 import Reveal from "@/components/Reveal";
 import DictionarySpine from "@/components/DictionarySpine";
 import DictionaryWord from "@/components/DictionaryWord";
 import SectionDivider from "@/components/SectionDivider";
 
+const featuredMedia = media.slice(0, 3);
+
 // Wherever her invented word appears in the bio, it becomes a living
-// dictionary entry (hover/tap reveals the definition).
+// dictionary entry (hover/tap reveals the definition). The word itself
+// stays "çikoçiki" in both languages — only its gloss translates.
 function withDictionaryWords(text: string) {
   return text
     .split(/(çikoçiki)/i)
@@ -23,6 +32,8 @@ function withDictionaryWords(text: string) {
 }
 
 export default function HomePage() {
+  const { language } = useLanguage();
+
   return (
     <div className="mx-auto max-w-4xl px-6">
       <Hero />
@@ -32,13 +43,13 @@ export default function HomePage() {
       <section className="py-20">
         <Reveal>
           <h2 className="font-serif text-sm uppercase tracking-[0.25em] text-muted">
-            Hakkında
+            {ui.about.heading[language]}
           </h2>
         </Reveal>
 
         <div className="mt-10 grid gap-12 sm:grid-cols-[1fr_11rem]">
           <div className="max-w-2xl space-y-5 font-serif text-lg leading-relaxed text-foreground/90">
-            {bio.map((paragraph, i) => (
+            {bio[language].map((paragraph, i) => (
               <Reveal key={i} delay={i === 0 ? 0 : 0.05}>
                 <p
                   className={
@@ -68,13 +79,13 @@ export default function HomePage() {
         <Reveal>
           <div className="flex items-baseline justify-between">
             <h2 className="font-serif text-sm uppercase tracking-[0.25em] text-muted">
-              Kitaplar
+              {ui.books.heading[language]}
             </h2>
             <Link
               href="/kitaplar"
               className="text-sm text-muted transition-colors hover:text-accent"
             >
-              Tümü →
+              {ui.books.viewAll[language]}
             </Link>
           </div>
         </Reveal>
@@ -83,6 +94,32 @@ export default function HomePage() {
           {books.map((book, i) => (
             <Reveal key={book.slug} delay={i * 0.1}>
               <BookCard book={book} />
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Featured video/podcast appearances */}
+      <SectionDivider />
+      <section className="py-20">
+        <Reveal>
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-serif text-sm uppercase tracking-[0.25em] text-muted">
+              {ui.media.heading[language]}
+            </h2>
+            <Link
+              href="/medya"
+              className="text-sm text-muted transition-colors hover:text-accent"
+            >
+              {ui.media.viewAll[language]}
+            </Link>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 grid gap-x-8 gap-y-12 sm:grid-cols-3">
+          {featuredMedia.map((item, i) => (
+            <Reveal key={item.id} delay={i * 0.08}>
+              <VideoCard item={item} />
             </Reveal>
           ))}
         </div>

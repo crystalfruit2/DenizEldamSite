@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { author, heroQuote, currentStatus } from "@/lib/site";
+import { useLanguage } from "@/lib/language-context";
+import { ui } from "@/lib/ui-strings";
 
 // Staggered entrance: each element fades up a beat after the previous one,
 // so the hero "arrives" on load rather than just appearing.
@@ -36,7 +38,8 @@ const quoteWord = {
 };
 
 export default function Hero() {
-  const words = heroQuote.split(" ");
+  const { language } = useLanguage();
+  const words = heroQuote[language].split(" ");
 
   return (
     <section className="grid items-center gap-12 py-20 sm:grid-cols-[1fr_300px] sm:py-28">
@@ -45,7 +48,7 @@ export default function Hero() {
           variants={item}
           className="text-sm uppercase tracking-[0.25em] text-muted"
         >
-          {author.tagline}
+          {author.tagline[language]}
         </motion.p>
         <motion.h1
           variants={item}
@@ -71,7 +74,7 @@ export default function Hero() {
             href="/kitaplar"
             className="group mt-10 inline-flex items-center gap-2 border border-accent px-6 py-2.5 text-sm text-accent transition-colors hover:bg-accent hover:text-background"
           >
-            Kitapları keşfet
+            {ui.hero.cta[language]}
             <span className="transition-transform duration-300 group-hover:translate-x-1">
               →
             </span>
@@ -86,7 +89,7 @@ export default function Hero() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-40 [animation-duration:2.5s]" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-accent/80" />
           </span>
-          {currentStatus}
+          {currentStatus[language]}
         </motion.p>
       </motion.div>
 

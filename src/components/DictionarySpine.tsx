@@ -1,8 +1,15 @@
+"use client";
+
+import { useLanguage } from "@/lib/language-context";
+import { dictionaryCaption } from "@/lib/site";
+
 // A CSS-drawn homage to the navy, gold-lettered Shorter Oxford English
 // Dictionary from Deniz's bio — the first book she "read" before she could
 // read. Entirely typographic (no copyrighted image), used as a quiet motif
-// beside the "Hakkında" section.
+// beside the "About" section.
 export default function DictionarySpine() {
+  const { language } = useLanguage();
+
   return (
     <figure className="flex flex-col items-center gap-4">
       <div className="relative">
@@ -33,7 +40,7 @@ export default function DictionarySpine() {
       </div>
 
       <figcaption className="max-w-[11rem] text-center text-xs italic leading-relaxed text-muted">
-        Okumayı bilmeden okuduğu ilk kitap.
+        {dictionaryCaption[language]}
       </figcaption>
     </figure>
   );

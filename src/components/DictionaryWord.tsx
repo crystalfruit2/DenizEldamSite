@@ -1,10 +1,18 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useLanguage } from "@/lib/language-context";
+import { dictionaryEntry } from "@/lib/site";
 
 // "Çikoçiki" — the word Deniz invented as a child, from her bio. Hovering it
 // reveals a tiny dictionary entry, closing the loop with the Oxford dictionary
-// motif: the site itself becomes the book that explains her word.
-// CSS-only popover (hover + focus), so this stays a server component.
+// motif: the site itself becomes the book that explains her word. The
+// invented word itself stays the same in both languages; only its gloss
+// translates.
 export default function DictionaryWord({ children }: { children: ReactNode }) {
+  const { language } = useLanguage();
+  const entry = dictionaryEntry[language];
+
   return (
     <span className="group relative inline-block">
       <button
@@ -22,10 +30,10 @@ export default function DictionaryWord({ children }: { children: ReactNode }) {
           çi·ko·çi·ki
         </span>
         <span className="mt-0.5 block text-xs italic text-muted">
-          isim, çocukluk icadı
+          {entry.label}
         </span>
         <span className="mt-2 block text-sm leading-relaxed text-foreground/85">
-          Hiç bitmeyen çikolata. Yapımına dair uzun ve gizli bir tarifi vardır.
+          {entry.entry}
         </span>
       </span>
     </span>
