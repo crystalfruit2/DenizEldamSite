@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import { ui } from "@/lib/ui-strings";
@@ -7,6 +8,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function SiteHeader() {
   const { language } = useLanguage();
+  const [open, setOpen] = useState(false);
 
   const nav = [
     { href: "/", label: ui.nav.home[language] },
@@ -21,10 +23,13 @@ export default function SiteHeader() {
         <Link
           href="/"
           className="font-serif text-xl tracking-wide text-foreground"
+          onClick={() => setOpen(false)}
         >
           Deniz Eldam
         </Link>
-        <div className="flex items-center gap-8">
+
+        {/* Desktop nav — hidden below sm, where it gets cramped with 4 links + switcher. */}
+        <div className="hidden items-center gap-8 sm:flex">
           <nav className="flex gap-8 text-sm">
             {nav.map((item) => (
               <Link
@@ -38,7 +43,44 @@ export default function SiteHeader() {
           </nav>
           <LanguageSwitcher />
         </div>
+
+        {/* Mobile menu toggle — a simple hamburger / close glyph, no icon library needed. */}
+        <button
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="flex h-8 w-8 flex-col items-center justify-center gap-1.5 sm:hidden"
+        >
+          <span
+            className={`h-px w-5 bg-foreground transition-transform duration-300 ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
+          />
+          <span
+            className={`h-px w-5 bg-foreground transition-transform duration-300 ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
+          />
+        </button>
       </div>
+
+      {/* Mobile menu panel */}
+      {open && (
+        <div className="border-t border-line bg-background px-6 py-6 sm:hidden">
+          <nav className="flex flex-col gap-5 text-base">
+            {nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="text-foreground/90 transition-colors hover:text-accent"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="mt-6 border-t border-line pt-6">
+            <LanguageSwitcher />
+          </div>
+        </div>
+      )}
     </header>
   );
 }

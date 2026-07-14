@@ -20,7 +20,7 @@ export const cvHeader = {
   name: "Deniz Eldam",
   tagline: { en: "Fiction Writer — Turkey", tr: "Öykü Yazarı — Türkiye" } satisfies Localized<string>,
   email: "denizsaatkayaeldam@hotmail.com",
-  site: "deniz-eldam-site.vercel.app",
+  site: "denizeldam.com",
 };
 
 export const cvProfile: Localized<string> = {
